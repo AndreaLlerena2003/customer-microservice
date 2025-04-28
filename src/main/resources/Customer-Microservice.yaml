@@ -209,7 +209,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 
-  /reporting/summary:
+  /reporting-customer/summary:
     post:
       summary: Generate product report
       description: Generate a complete and general report for a specific bank product within a time interval specified by the user

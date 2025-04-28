@@ -1,9 +1,9 @@
 package nnt_data.customer_service.controller;
 
 import lombok.RequiredArgsConstructor;
-import nnt_data.customer_service.api.ReportingApi;
+import nnt_data.customer_service.api.ReportingCustomerApi;
 import nnt_data.customer_service.domain.service.ReportingService;
-import nnt_data.customer_service.entity.ReportingSummaryPostRequest;
+import nnt_data.customer_service.entity.ReportingCustomerSummaryPostRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,21 +15,20 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
-public class ReportingController implements ReportingApi {
+public class ReportingController implements ReportingCustomerApi {
     private final ReportingService reportingService;
 
-
     /**
-     * POST /reporting/summary : Generate product report
+     * POST /reporting-customer/summary : Generate product report
      * Generate a complete and general report for a specific bank product within a time interval specified by the user
      *
-     * @param reportingSummaryPostRequest (required)
+     * @param reportingCustomerSummaryPostRequest (required)
      * @param exchange
      * @return Reporte de productos generado exitosamente (status code 200)
      */
     @Override
-    public Mono<ResponseEntity<Map<String, Object>>> reportingSummaryPost(Mono<ReportingSummaryPostRequest> reportingSummaryPostRequest, ServerWebExchange exchange) {
-        return reportingSummaryPostRequest.flatMap(request ->
+    public Mono<ResponseEntity<Map<String, Object>>> reportingCustomerSummaryPost(Mono<ReportingCustomerSummaryPostRequest> reportingCustomerSummaryPostRequest, ServerWebExchange exchange) {
+        return reportingCustomerSummaryPostRequest.flatMap(request ->
                 reportingService.getReportingForProduct(request.getProductId(), request.getStartDate(), request.getEndDate())
                         .map(report -> {
                             return ResponseEntity.ok(report);
